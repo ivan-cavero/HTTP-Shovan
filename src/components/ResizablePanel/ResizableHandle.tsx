@@ -11,7 +11,7 @@ function ResizableHandle({ isResizing, isVertical, handleMouseDown }: ResizableH
   
     return (
       <div
-        className={`absolute ${positionHandleStyle} bg-blue-300 hover:bg-blue-600 ${
+        className={`absolute ${positionHandleStyle} bg-[#181818] hover:bg-[#1b1b1b] ${
           isResizing ? "bg-blue-600" : ""
         }`}
         onMouseDown={handleMouseDown}
