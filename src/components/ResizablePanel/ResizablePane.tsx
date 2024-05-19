@@ -7,7 +7,7 @@ interface ResizablePaneProps {
   maxSize?: number;
   grow?: boolean;
   isVertical: boolean;
-  bgColor: string;
+  bgColor?: string;
   children?: React.ReactNode;
 }
 
@@ -51,7 +51,7 @@ function ResizablePane({
   
     return (
       <div
-        className={`relative ${bgColor} ${grow ? "grow" : ""} shrink-0`}
+        className={`relative ${bgColor || 'rgba(0, 0, 0, 10%)'} ${grow ? "grow" : ""} shrink-0`}
         style={{ [dimension]: `${size}px` }}
       >
         {children}

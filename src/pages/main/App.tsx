@@ -15,7 +15,6 @@ export default function App() {
         initialSize={200}
         maxSize={300}
         isVertical={isVertical}
-        bgColor={"bg-[#383838]"}
       >
         <DirectoryPanel />
       </ResizablePane>
