@@ -95,11 +95,11 @@ export function DropdownMenu({
     >
       <motion.button
         whileTap={{ scale: 0.97 }}
-        className="bg-neutral-900 border border-neutral-800 flex items-center justify-between p-1 rounded-xl"
+        className="bg-neutral-900 border border-neutral-800 flex items-center justify-between p-0.5 rounded-xl"
         onClick={() => setIsOpen((prevState) => !prevState)}
       >
         <div style={{ transformOrigin: "50% 55%" }}>
-          <Plus size={14} className="text-neutral-400" id="menu-icon" />
+          <Plus size={12} className="text-neutral-400" id="menu-icon" />
         </div>
       </motion.button>
       <ul

@@ -3,12 +3,11 @@ import { DropdownMenu } from "../Reusable/DropdownMenu";
 export default function DirectoryPanel() {
     return (
         <div className="flex flex-col h-full">
-            <header className="flex justify-between items-center px-4 py-2 border-b border-gray-300">
-                <h1 className="text-2xl font-bold">Add</h1>
+            <header className="flex justify-between items-center px-4 border-b border-gray-300 h-8" data-tauri-drag-region>
+                <span className="text-1xl text-white">Add</span>
                 <DropdownMenu />
             </header>
-            <main className="flex-grow overflow-auto">
-            </main>
+            <main className="flex-grow overflow-auto"></main>
             <footer className="border-t border-gray-300 px-4 py-2">
                 <input
                 type="text"

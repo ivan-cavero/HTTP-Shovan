@@ -1,8 +1,11 @@
 import ResizablePane from "../../components/ResizablePanel/ResizablePane";
 import DirectoryPanel from "../../components/Directory/DirectoryPanel";
+import { Minus, Copy, X } from 'lucide-react';
+import { Window } from '@tauri-apps/api/window';
 
 export default function App() {
   const isVertical = false
+  const appWindow = new Window('main');
 
   return (
     <div
@@ -25,17 +28,21 @@ export default function App() {
         isVertical={isVertical}
         bgColor={"bg-[#282828]"}
       >
-        <header>
-          <h1 className="text-2xl font-bold text-center">Resizable Panel</h1>
-        </header>
-        <main>
-          <div className="flex items-center justify-center h-full">
-            Pane 2
-          </div>
-        </main>
-        <footer>
-          <p className="text-center">Resizable Pane Footer</p>
-        </footer>
+        <div className="flex flex-col h-full">
+          <header className="flex justify-end items-center px-2 border-b border-gray-300 h-8" data-tauri-drag-region>
+            <button onClick={() => appWindow.minimize()}>
+              <Minus size={16} color="white" className="mx-2" />
+            </button>
+            <button onClick={() => appWindow.toggleMaximize()}>
+              <Copy size={13} color="white" className="mx-2" />
+            </button>
+            <button onClick={() => appWindow.close()}>
+              <X size={13} color="white" className="mx-2" />
+            </button>
+          </header>
+          <main className="flex-grow overflow-auto">
+          </main>
+        </div>
       </ResizablePane>
     </div>
   );
