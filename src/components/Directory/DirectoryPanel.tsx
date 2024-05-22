@@ -1,4 +1,5 @@
 import { DropdownMenu } from '../Reusable/DropdownMenu'
+import { Search } from 'lucide-react'
 
 export default function DirectoryPanel() {
 	return (
@@ -8,13 +9,16 @@ export default function DirectoryPanel() {
 				<DropdownMenu />
 			</header>
 			<main className='flex-grow overflow-auto' />
-			<footer className='border-t border-gray-300 px-4 py-2'>
-				<input
-					type='text'
-					placeholder='Search...'
-					className='w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-400'
-				/>
-			</footer>
+			<footer className='px-3 py-2'>
+                <div className='relative'>
+                    <Search size={14} color='white' className='absolute left-2 top-1/2 transform -translate-y-1/2' />
+                    <input
+                        type='text'
+                        placeholder='Filter...'
+                        className='w-full pl-8 rounded-md focus:outline-none bg-white bg-opacity-10 text-gray-300 placeholder-gray-300 text-sm'
+                    />
+                </div>
+            </footer>
 		</div>
 	)
 }
