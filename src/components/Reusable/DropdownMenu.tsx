@@ -59,13 +59,61 @@ export function DropdownMenu({ containerClassName, itemClassName, store }: Dropd
 	}, [scope.current])
 
 	const items = [
-		{ icon: <Folders size={16} />, name: 'HTTP Request', customStyle: 'text-primary-100', type: 'http', defaultName: 'New Request', method: 'GET' },
-		{ icon: <FilePlus2 size={16} />, name: 'Event Stream Request', type: 'event-stream', defaultName: 'Event Stream' },
-		{ icon: <FilePlus2 size={16} />, name: 'Websocket Request', type: 'websocket', defaultName: 'Websocket Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'GraphQL Request', type: 'graphql', defaultName: 'GraphQL Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'gRPC Request', type: 'grpc', defaultName: 'gRPC Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'From Curl', type: 'curl', defaultName: 'Curl Request' },
-		{ icon: <Folders size={16} />, name: 'New Folder', type: 'folder', defaultName: 'New Folder' }
+		{
+			icon: <Folders size={16} />,
+			name: 'HTTP Request',
+			customStyle: 'text-primary-100',
+			type: 'http',
+			defaultName: 'New Request',
+			method: 'GET'
+		},
+		{
+			icon: <FilePlus2 size={16} />,
+			name: 'Event Stream Request',
+			customStyle: 'text-secondary-100',
+			type: 'event-stream',
+			defaultName: 'Event Stream',
+			method: 'GET'
+		},
+		{
+			icon: <FilePlus2 size={16} />,
+			name: 'Websocket Request',
+			customStyle: 'text-secondary-100',
+			type: 'websocket',
+			defaultName: 'Websocket Request',
+			method: 'GET'
+		},
+		{
+			icon: <FilePlus2 size={16} />,
+			name: 'GraphQL Request',
+			customStyle: 'text-secondary-100',
+			type: 'graphql',
+			defaultName: 'GraphQL Request',
+			method: 'POST'
+		},
+		{
+			icon: <FilePlus2 size={16} />,
+			name: 'gRPC Request',
+			customStyle: 'text-secondary-100',
+			type: 'grpc',
+			defaultName: 'gRPC Request',
+			method: 'POST'
+		},
+		{
+			icon: <FilePlus2 size={16} />,
+			name: 'From Curl',
+			customStyle: 'text-secondary-100',
+			type: 'curl',
+			defaultName: 'Curl Request',
+			method: 'GET'
+		},
+		{
+			icon: <Folders size={16} />,
+			name: 'New Folder',
+			customStyle: 'text-primary-100',
+			type: 'folder',
+			defaultName: 'New Folder'
+		}
 	]
 
 	return (
@@ -93,8 +141,15 @@ export function DropdownMenu({ containerClassName, itemClassName, store }: Dropd
 						<button
 							type='button'
 							onClick={async () => {
-								const directories = ((await store.get('directories')) as { directories: { type: string, name: string }[] }) || { directories: [] }
-								await store.set('directories', { directories: [...directories.directories, { type, name: defaultName }] })
+								const directories = ((await store.get('directories')) as { directories: { type: string; name: string }[] }) || {
+									directories: []
+								}
+								await store.set('directories', {
+									directories: [
+										...directories.directories,
+										{ type, name: defaultName, id: Math.random().toString(36).substring(2, 11) }
+									]
+								})
 								setIsOpen(false)
 								await store.save()
 							}}

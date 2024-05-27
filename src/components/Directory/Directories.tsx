@@ -10,6 +10,7 @@ interface Directory {
 	type: string
 	name: string
 	id: string
+	children?: Directory[]
 }
 
 interface DataItem {
@@ -27,7 +28,7 @@ function Directories({ store }: DirectoriesProps) {
 				const { directories } = data[0]
 				const directoriesWithId = directories.map((directory) => ({
 					...directory,
-					id: directory.id || Math.random().toString(36).substr(2, 9)
+					id: directory.id
 				}))
 				console.log(directoriesWithId)
 				setDirectories(directoriesWithId)
@@ -56,7 +57,7 @@ function Directories({ store }: DirectoriesProps) {
 						<button
 							type='button'
 							className='text-white hover:text-gray-600 focus:outline-none'
-							onClick={(e) => {
+							onClick={async (e) => {
 								e.stopPropagation()
 							}}
 						>
