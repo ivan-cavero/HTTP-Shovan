@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useAnimate, stagger, motion } from 'framer-motion'
+import type { Store } from '@tauri-apps/plugin-store'
 
 import { FilePlus2, Folders, Plus, ChevronRightIcon } from 'lucide-react'
 
 import { cn } from '../../utils/cn'
-
-import { Store } from '@tauri-apps/plugin-store'
-const store = new Store('store.bin')
 
 function useMenuAnimation(isOpen: boolean) {
 	const [scope, animate] = useAnimate()
@@ -40,9 +38,10 @@ function useMenuAnimation(isOpen: boolean) {
 type DropdownMenuProps = {
 	containerClassName?: string
 	itemClassName?: string
+	store: Store
 }
 
-export function DropdownMenu({ containerClassName, itemClassName }: DropdownMenuProps) {
+export function DropdownMenu({ containerClassName, itemClassName, store }: DropdownMenuProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const scope = useMenuAnimation(isOpen)
 
@@ -57,16 +56,16 @@ export function DropdownMenu({ containerClassName, itemClassName }: DropdownMenu
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
-	}, [])
+	}, [scope.current])
 
 	const items = [
-		{ icon: <Folders size={16} />, name: 'HTTP Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'Event Stream Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'Websocket Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'GraphQL Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'gRPC Request' },
-		{ icon: <FilePlus2 size={16} />, name: 'From Curl' },
-		{ icon: <FilePlus2 size={16} />, name: 'New Folder' }
+		{ icon: <Folders size={16} />, name: 'HTTP Request', customStyle: 'text-primary-100', type: 'http', defaultName: 'New Request', method: 'GET' },
+		{ icon: <FilePlus2 size={16} />, name: 'Event Stream Request', type: 'event-stream', defaultName: 'Event Stream' },
+		{ icon: <FilePlus2 size={16} />, name: 'Websocket Request', type: 'websocket', defaultName: 'Websocket Request' },
+		{ icon: <FilePlus2 size={16} />, name: 'GraphQL Request', type: 'graphql', defaultName: 'GraphQL Request' },
+		{ icon: <FilePlus2 size={16} />, name: 'gRPC Request', type: 'grpc', defaultName: 'gRPC Request' },
+		{ icon: <FilePlus2 size={16} />, name: 'From Curl', type: 'curl', defaultName: 'Curl Request' },
+		{ icon: <Folders size={16} />, name: 'New Folder', type: 'folder', defaultName: 'New Folder' }
 	]
 
 	return (
@@ -89,14 +88,13 @@ export function DropdownMenu({ containerClassName, itemClassName }: DropdownMenu
 					clipPath: 'inset(10% 50% 90% 50% round 12px)'
 				}}
 			>
-				{items.map(({ icon, name, customStyle }) => (
+				{items.map(({ icon, name, type, defaultName, customStyle }) => (
 					<li key={name}>
 						<button
-              type='button'
+							type='button'
 							onClick={async () => {
-								console.log(name)
-								await store.set('directories', { name })
-								console.log(await store.values())
+								const directories = ((await store.get('directories')) as { directories: { type: string, name: string }[] }) || { directories: [] }
+								await store.set('directories', { directories: [...directories.directories, { type, name: defaultName }] })
 								setIsOpen(false)
 								await store.save()
 							}}
