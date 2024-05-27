@@ -1,7 +1,7 @@
 {
   "productName": "http-shovan",
   "version": "0.0.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.http-shovan.app",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
